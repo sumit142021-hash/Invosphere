@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Category & Daily Sales Charts</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+
+  <style>
+    /* 🎨 General Page Styling */
+    body {
+      font-family: "Segoe UI", sans-serif;
+      text-align: center;
+      background-color: #f8f9fa; /* Light neutral background */
+      margin: 0;
+      padding: 25px;
+      color: #333;
+    }
+
+    h2 {
+      font-weight: 700;
+      margin-top: 20px;
+      color: #b02a37;
+    }
+
+    /* 🔘 Buttons */
+    .btn-custom {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 22px;
+      font-weight: 600;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      color: white;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .home-btn {
+      background-color: #dc3545;
+    }
+
+    .filter-btn {
+      background-color: #e74c3c;
+    }
+
+    .btn-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .active-filter {
+      background-color: #b02a37 !important;
+      box-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+    }
+
+    /* 📊 Chart Cards */
+    .chart-card {
+      background: #fff;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 25px auto;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      transition: transform 0.3s ease;
+    }
+
+    .chart-card:hover {
+      transform: scale(1.01);
+    }
+
+    h4 {
+      color: #dc3545;
+      font-weight: 600;
+    }
+
+    canvas {
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 🏠 Navigation Buttons -->
+  <div class="container text-center">
+    <a href="{% url 'homepg' %}" class="btn-custom home-btn">🏠 Back to Home</a>
+    <a href="?filter=day" class="btn-custom filter-btn {% if filter_type == 'day' %}active-filter{% endif %}">📅 Day</a>
+    <a href="?filter=week" class="btn-custom filter-btn {% if filter_type == 'week' %}active-filter{% endif %}">🗓️ Week</a>
+  </div>
+
+  <!-- Title -->
+  <h2>📊 Sales Summary ({{ filter_type|title }} View)</h2>
+
+  <!-- 🧾 Category Chart -->
+  <div class="chart-card">
+    <h4>Category-wise Sales</h4>
+    <canvas id="categoryChart" width="400" height="200"></canvas>
+  </div>
+
+  <!-- 📈 Daily Trend Chart -->
+  <div class="chart-card">
+    <h4>Daily Sales Trend</h4>
+    <canvas id="dailyChart" width="400" height="200"></canvas>
+  </div>
+
+  <!-- 📊 Chart Scripts -->
+  <script>
+    const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+    const dailyCtx = document.getElementById('dailyChart').getContext('2d');
+
+    const categories = {{ categories|safe }};
+    const totals = {{ totals|safe }};
+    const dates = {{ dates|safe }};
+    const dailyTotals = {{ daily_totals|safe }};
+
+    // 🧾 Category Bar Chart
+    new Chart(categoryCtx, {
+      type: 'bar',
+      data: {
+        labels: categories,
+        datasets: [{
+          label: 'Total Items Sold (by Category)',
+          data: totals,
+          borderWidth: 1,
+          backgroundColor: ['#dc3545', '#e74c3c', '#ff6b6b', '#b02a37']
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true } },
+        plugins: { legend: { labels: { color: '#333' } } }
+      }
+    });
+
+    // 📈 Daily Sales Line Chart
+    new Chart(dailyCtx, {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: 'Total Items Sold (Daily Trend)',
+          data: dailyTotals,
+          borderColor: '#dc3545',
+          backgroundColor: 'rgba(220,53,69,0.1)',
+          tension: 0.4,
+          fill: true,
+          borderWidth: 2.5,
+          pointBackgroundColor: '#e74c3c'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true } },
+        plugins: { legend: { labels: { color: '#333' } } }
+      }
+    });
+  </script>
+</body>
+</html>

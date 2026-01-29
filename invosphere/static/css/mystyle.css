@@ -1,0 +1,196 @@
+/* General Styles */
+body {
+  
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(180deg, #fffaf0, #ffe6e6);
+  color: #333;
+  min-height: 100vh;
+  overflow-x: hidden;
+  /*background: url("/static/images/backimg.png") no-repeat center center fixed;
+  background-size: cover;*/
+}
+.hero-section > * {
+  position: relative;
+  z-index: 1; /* keeps your text above the overlay */
+}
+
+/* Navbar */
+#mainNav {
+  background: #e63946;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.5rem;
+}
+
+.nav-link {
+  color: #fff !important;
+  font-weight: 500;
+  margin-left: 1rem;
+  transition: 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #ffcb77 !important;
+}
+
+/* Hero Section */
+.hero {
+  background: url("../images/backimg.png") center/cover no-repeat fixed;
+  padding: 120px 20px;
+  position: relative;
+}
+
+
+/* Add a dark or light overlay */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6); /* light transparent overlay */
+  /* For darker effect use rgba(0, 0, 0, 0.4); */
+  z-index: 0;
+}
+
+.welcome-text {
+  font-family: 'Pacifico', cursive;
+  font-size: 3rem;
+  color: #e63946;
+  animation: fadeInDown 1.2s ease;
+}
+
+.sub-text {
+  font-size: 2rem;
+  color: #ff6600;
+  display: inline-block;
+  animation: bounceIn 1.5s ease;
+}
+
+.food-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.food-img {
+  width: 80px;
+  height: 80px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.food-img:hover {
+  transform: scale(1.15);
+  filter: brightness(1.2);
+}
+
+/* Buttons */
+.btn-start {
+  background: #ff6600;
+  color: #fff;
+  border-radius: 30px;
+  padding: 10px 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-start:hover {
+  background: #e65c00;
+  transform: scale(1.05);
+}
+
+.btn-admin {
+  background: #e63946;
+  color: #fff;
+  border-radius: 30px;
+  padding: 10px 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-admin:hover {
+  background: #c72d3b;
+  transform: scale(1.05);
+}
+
+/* Tagline */
+.tagline {
+  font-style: italic;
+  font-weight: 500;
+  color: #444;
+  animation: fadeInUp 1.2s ease;
+}
+
+/* Footer */
+.footer {
+  background-color: #f8f9fa;
+  border-top: 1px solid #ddd;
+}
+
+.footer-link {
+  color: #e63946;
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: 500;
+}
+
+.footer-link:hover {
+  color: #ff6600;
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .welcome-text {
+    font-size: 2.2rem;
+  }
+
+  .sub-text {
+    font-size: 1.4rem;
+  }
+
+  .food-img {
+    width: 60px;
+    height: 60px;
+  }
+}
+
